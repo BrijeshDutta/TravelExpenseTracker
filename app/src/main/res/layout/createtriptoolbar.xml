@@ -1,0 +1,23 @@
+<android.support.v7.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    android:elevation="4dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/create_new_trip_lable"
+        android:layout_gravity="left"
+        android:id="@+id/toolbar_title"
+        android:textColor="@color/colorWhite"/>
+    <ImageButton android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/createNewTrip"
+        android:textSize="12sp"
+        android:background="@null"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_action_right"
+        android:layout_gravity="right"/>
+</android.support.v7.widget.Toolbar>
