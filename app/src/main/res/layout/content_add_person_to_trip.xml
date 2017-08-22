@@ -8,7 +8,8 @@
     tools:context="com.travelexpensetracker.activity.AddPersonToTripActivity"
     tools:showIn="@layout/activity_add_person_to_trip"
     android:layout_marginTop="50dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/linerLayoutAddPerson">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
