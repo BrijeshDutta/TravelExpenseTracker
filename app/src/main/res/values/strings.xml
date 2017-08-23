@@ -26,7 +26,7 @@
         completions."
     </string>
     <string name="trip_name">Trip name</string>
-    <string name="tripdescription">Description</string>
+    <string name="tripdescription">Description (Opt)</string>
     <string name="traveldatelable">Travel date</string>
     <string name="select_currency">Select currency</string>
     <string name="tripdetails">Trip details</string>
@@ -130,4 +130,5 @@
     <string name="deletetrip">Delete</string>
     <string name="share_expensetrip">Share expense</string>
     <string name="addpersontotriplable">Add person</string>
+    <string name="errormessage_trip_nameisrequired">Trip name is required</string>
 </resources>

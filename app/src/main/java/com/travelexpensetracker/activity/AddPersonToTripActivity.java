@@ -33,6 +33,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.travelexpensetracker.R;
 
@@ -43,20 +44,31 @@ import jxl.Image;
 
 public class AddPersonToTripActivity extends AppCompatActivity {
 
+    //UI Variables
+
     ImageButton ibEditTripDetails,ibCreateNewTrip;
     LinearLayout linerLayoutAddPerson;
     EditText personName;
+    TextView tvTripNameDisplay,tvTripDescriptionDisplay,tvTripDate,etTripNameTitleDisplay;
     int iCountCardCreation= 0;
 
     ListView listViewPerson;
     List<String> personNameList = new ArrayList<>();
     ArrayAdapter<String> adapterPersonDetails;
+
+    //Variable to get trip details from the previous activity
+    String sTripName,sTripDescription,sTripDate,sTripCurrency;
+
+    //get data from create new trip activity
+    Bundle bundleTripData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_person_to_trip);
 
         initializeUiComponents();
+        getValuesFromCreateNewTripActivity();
+        setValuesInUiComponents();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +90,25 @@ public class AddPersonToTripActivity extends AppCompatActivity {
                 startActivity(new Intent(AddPersonToTripActivity.this,TripSummaryActivity.class));
             }
         });
+    }
+
+    private void setValuesInUiComponents() {
+        etTripNameTitleDisplay.setText(sTripName);
+        tvTripNameDisplay.setText(sTripName);
+        tvTripDescriptionDisplay.setText(sTripDescription);
+        tvTripDate.setText(sTripDate);
+
+    }
+
+    private void getValuesFromCreateNewTripActivity() {
+        bundleTripData = getIntent().getExtras();
+        sTripName = bundleTripData.getString("tripName");
+        sTripDescription = bundleTripData.getString("tripDescription");
+        sTripDate =  bundleTripData.getString("tripDate");
+        sTripCurrency = bundleTripData.getString("tripCurrency");
+
+        Toast.makeText(AddPersonToTripActivity.this,"Trip details: Trip Name: "+ sTripName+ " Trip Description  :  " + sTripDescription + " Trip date : - " + sTripDate + " Trip Currency : -"+ sTripCurrency,Toast.LENGTH_SHORT ).show();
+
     }
 
     private void showAddPersonInputDailog() {
@@ -200,6 +231,10 @@ public class AddPersonToTripActivity extends AppCompatActivity {
         listViewPerson = new ListView(this);
         personNameList = new ArrayList<>();
         ibCreateNewTrip = (ImageButton) findViewById(R.id.ibCreateNewTrip);
+        tvTripNameDisplay = (TextView) findViewById(R.id.tvTripNameDisplay);
+        tvTripDescriptionDisplay = (TextView) findViewById(R.id.tvTripDescriptionDisplay);
+        tvTripDate = (TextView) findViewById(R.id.tvTripDate);
+        etTripNameTitleDisplay = (TextView) findViewById(R.id.etTripNameTitleDisplay);
     }
 
 

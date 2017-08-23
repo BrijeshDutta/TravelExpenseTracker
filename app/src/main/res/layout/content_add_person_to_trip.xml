@@ -33,6 +33,7 @@
                 android:textStyle="bold"/>
 
             <TextView
+                android:id="@+id/tvTripNameDisplay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tripname"
@@ -64,6 +65,7 @@
                 android:textStyle="bold"/>
 
             <TextView
+                android:id="@+id/tvTripDescriptionDisplay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/trip_description"
@@ -95,6 +97,7 @@
                 android:textStyle="bold"/>
 
             <TextView
+                android:id="@+id/tvTripDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/trip_date"

@@ -6,21 +6,13 @@
     android:elevation="4dp">
 
             <TextView
+                android:id="@+id/etTripNameTitleDisplay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TripName"
                 android:layout_gravity="left"
-                android:id="@+id/toolbar_trip_title"
                 android:textColor="@color/colorWhite"
                 android:layout_weight="1"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TripDate"
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/toolbar_trip_date"
-            android:textColor="@color/colorWhite"
-            android:layout_weight="1"/>
             <ImageButton android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/ibCreateNewTrip"

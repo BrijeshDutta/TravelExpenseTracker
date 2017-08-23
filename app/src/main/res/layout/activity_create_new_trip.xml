@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content">
 
                 <AutoCompleteTextView
-                    android:id="@+id/etTripName"
+                    android:id="@+id/actvTripName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/trip_name"
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content">
 
                 <AutoCompleteTextView
-                    android:id="@+id/etTripDescription"
+                    android:id="@+id/actvTripDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/tripdescription"
@@ -136,6 +136,7 @@
                 android:layout_marginBottom="10dp"
                 android:textStyle="bold"/>
             <Spinner
+                android:id="@+id/sTripCurrency"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
