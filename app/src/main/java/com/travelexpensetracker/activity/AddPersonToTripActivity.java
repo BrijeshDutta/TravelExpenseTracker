@@ -1,10 +1,12 @@
 package com.travelexpensetracker.activity;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,9 +14,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -61,6 +65,14 @@ public class AddPersonToTripActivity extends AppCompatActivity {
 
     //get data from create new trip activity
     Bundle bundleTripData;
+
+    //UI Compoenents for adding a person to trip
+    AutoCompleteTextView actvPersonName,actvPersonMobileNo,actvPersonEmailId,actvPersonDeposit;
+
+    //Variables to store user values
+
+    String sPersonName,sPersonMobileNo,sPersonEmailId,sPersonDeposit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,56 +124,23 @@ public class AddPersonToTripActivity extends AppCompatActivity {
     }
 
     private void showAddPersonInputDailog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(AddPersonToTripActivity.this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View v = inflater.inflate(R.layout.dailog_add_person, null);  // this line
+        builder.setView(v);
+        initializeDailogUiComponents(v);
 
-        Context context = AddPersonToTripActivity.this;
-        LinearLayout layout = new LinearLayout(context);
-        layout.setOrientation(LinearLayout.VERTICAL);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-        layoutParams.setMargins(30, 20, 30, 0);
-
-        final TextView title = new TextView(context);
-        title.setText("Add person");
-        layout.addView(title,layoutParams);
-
-        LinearLayout.LayoutParams layoutParamsImageButton = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        layoutParamsImageButton.setMargins(30, 20, 30, 0);
-        final ImageButton ibLoadFromContacts = new ImageButton(context);
-        ibLoadFromContacts.setImageResource(R.drawable.ic_action_contacts);
-        ibLoadFromContacts.setBackgroundColor(Color.TRANSPARENT);
-        layout.addView(ibLoadFromContacts,layoutParamsImageButton);
-
-
-        personName = new EditText(context);
-        personName.setHint("Name");
-        layout.addView(personName,layoutParams);
-
-        final EditText personMobileNo = new EditText(context);
-        personMobileNo.setHint("Mobile No");
-        personMobileNo.setInputType(InputType.TYPE_CLASS_PHONE);
-        layout.addView(personMobileNo,layoutParams);
-
-        final EditText personEmailId = new EditText(context);
-        personEmailId.setHint("Email Id (Optional)");
-        personEmailId.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-        layout.addView(personEmailId,layoutParams);
-
-        final EditText personDepositAmount = new EditText(context);
-        personDepositAmount.setHint("Deposit Amount (Optional)");
-        personDepositAmount.setInputType(InputType.TYPE_CLASS_NUMBER);
-        layout.addView(personDepositAmount,layoutParams);
-
-        builder.setView(layout);
-
-// Set up the buttons
+        // Set up the buttons
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                getUserEnteredValuesForAddingPerson();
+                if(validateUserEnteredValues()){
 
+                }else {
+
+                }
                 createAddPersonCardView();
             }
         });
@@ -172,13 +151,33 @@ public class AddPersonToTripActivity extends AppCompatActivity {
             }
         });
 
-        builder.show();
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private boolean validateUserEnteredValues() {
+
+        return true;
+    }
+
+    private void getUserEnteredValuesForAddingPerson() {
+        sPersonName = actvPersonName.getText().toString().trim();
+        sPersonMobileNo = actvPersonMobileNo.getText().toString().trim();
+        sPersonEmailId = actvPersonEmailId.getText().toString().trim();
+        sPersonDeposit = actvPersonDeposit.getText().toString().trim();
+    }
+
+    private void initializeDailogUiComponents(View v) {
+        actvPersonName = (AutoCompleteTextView) v.findViewById(R.id.actvPersonName);
+        actvPersonMobileNo = (AutoCompleteTextView) v.findViewById(R.id.actvPersonMobileNo);
+        actvPersonEmailId = (AutoCompleteTextView) v.findViewById(R.id.actvPersonEmailId);
+        actvPersonDeposit = (AutoCompleteTextView) v.findViewById(R.id.actvPersonDeposit);
     }
 
     private void createAddPersonCardView() {
         iCountCardCreation++;
         if (iCountCardCreation>1){
-            personNameList.add(personName.getText().toString());
+            personNameList.add(sPersonName);
             adapterPersonDetails = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, personNameList);
             listViewPerson.setAdapter(adapterPersonDetails);
 
@@ -205,7 +204,7 @@ public class AddPersonToTripActivity extends AppCompatActivity {
             // Set CardView elevation
             card.setCardElevation(9);
 
-            personNameList.add(personName.getText().toString());
+            personNameList.add(sPersonName);
             adapterPersonDetails = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, personNameList);
             listViewPerson.setAdapter(adapterPersonDetails);
 

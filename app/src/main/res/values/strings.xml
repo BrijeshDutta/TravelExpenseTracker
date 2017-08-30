@@ -131,4 +131,9 @@
     <string name="share_expensetrip">Share expense</string>
     <string name="addpersontotriplable">Add person</string>
     <string name="errormessage_trip_nameisrequired">Trip name is required</string>
+    <string name="addperson">Add Person</string>
+    <string name="name">Name</string>
+    <string name="mobile_no">Mobile No</string>
+    <string name="email_id">Email id (Opt)</string>
+    <string name="deposit_opt">Deposit (Opt)</string>
 </resources>
