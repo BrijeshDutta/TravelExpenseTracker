@@ -80,7 +80,7 @@ public class AddPersonToTripActivity extends AppCompatActivity {
 
     //Variables to store user values
 
-    String sPersonName,sPersonMobileNo,sPersonEmailId,sPersonDeposit,sTripId;
+    String sPersonName,sPersonMobileNo,sPersonEmailId,sPersonDeposit,sTripId,sPersonId;
     List<Person> personList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +127,21 @@ public class AddPersonToTripActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isComplete()){
+                    for (int i = 0;i<personList.size();i++){
+                        DatabaseReference databaseReferencePerson = DatabaseValues.getPersonDetailsReference();
+                        sPersonId = databaseReferencePerson.push().getKey();
+                        personList.get(i).setsPersonId(sPersonId);
+                        personList.get(i).setsTripId(sTripId);
+                        databaseReferencePerson.child(sPersonId).setValue(personList.get(i)).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isComplete()){
+                                    Toast.makeText(AddPersonToTripActivity.this,"Added Person",Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+
+                    }
                     Toast.makeText(AddPersonToTripActivity.this,"Added ",Toast.LENGTH_LONG).show();
                 }
             }

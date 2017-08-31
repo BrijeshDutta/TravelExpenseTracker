@@ -13,4 +13,8 @@ public class DatabaseValues {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("TripDetails");
         return databaseReference;
     }
+    public static DatabaseReference getPersonDetailsReference(){
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("PersonDetails");
+        return databaseReference;
+    }
 }

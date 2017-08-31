@@ -5,7 +5,8 @@ package com.travelexpensetracker.model;
  */
 
 public class Person {
-
+    String sPersonId;
+    String sTripId;
     String sPersonName;
     String sPersonMobileNo;
     String sPersonEmailId;
@@ -35,5 +36,21 @@ public class Person {
 
     public String getsPersonDeposit() {
         return sPersonDeposit;
+    }
+
+    public String getsPersonId() {
+        return sPersonId;
+    }
+
+    public void setsPersonId(String sPersonId) {
+        this.sPersonId = sPersonId;
+    }
+
+    public String getsTripId() {
+        return sTripId;
+    }
+
+    public void setsTripId(String sTripId) {
+        this.sTripId = sTripId;
     }
 }
