@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -39,8 +40,15 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.travelexpensetracker.R;
+import com.travelexpensetracker.database.DatabaseValues;
 import com.travelexpensetracker.model.Person;
+import com.travelexpensetracker.model.Trip;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +80,7 @@ public class AddPersonToTripActivity extends AppCompatActivity {
 
     //Variables to store user values
 
-    String sPersonName,sPersonMobileNo,sPersonEmailId,sPersonDeposit;
+    String sPersonName,sPersonMobileNo,sPersonEmailId,sPersonDeposit,sTripId;
     List<Person> personList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,9 +108,31 @@ public class AddPersonToTripActivity extends AppCompatActivity {
         ibCreateNewTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(AddPersonToTripActivity.this,TripSummaryActivity.class));
+                if (personList.size()<=0){
+                    Toast.makeText(AddPersonToTripActivity.this, R.string.addatleastoneperson,Toast.LENGTH_SHORT).show();
+                }else {
+                    processTripDataToDatabase();
+                    startActivity(new Intent(AddPersonToTripActivity.this,TripSummaryActivity.class));
+                }
             }
         });
+    }
+
+    private void processTripDataToDatabase() {
+
+        DatabaseReference databaseReferenceTrip = DatabaseValues.getTripDetailsReference();
+        sTripId = databaseReferenceTrip.push().getKey();
+        Trip trip = new Trip(sTripId,sTripName,sTripDescription,sTripDate,sTripCurrency);
+        databaseReferenceTrip.child(sTripId).setValue(trip).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isComplete()){
+                    Toast.makeText(AddPersonToTripActivity.this,"Added ",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+
     }
 
     private void setValuesInUiComponents() {

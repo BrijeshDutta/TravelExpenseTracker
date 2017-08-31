@@ -139,4 +139,5 @@
     <string name="personnamerequired">Person name required</string>
     <string name="personmobilenorequied">Person mobile is required</string>
     <string name="okdailogbutton">OK</string>
+    <string name="addatleastoneperson">Please add atleast one person to the trip</string>
 </resources>
