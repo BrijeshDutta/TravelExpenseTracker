@@ -136,4 +136,7 @@
     <string name="mobile_no">Mobile No</string>
     <string name="email_id">Email id (Opt)</string>
     <string name="deposit_opt">Deposit (Opt)</string>
+    <string name="personnamerequired">Person name required</string>
+    <string name="personmobilenorequied">Person mobile is required</string>
+    <string name="okdailogbutton">OK</string>
 </resources>

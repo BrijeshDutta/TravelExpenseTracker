@@ -40,6 +40,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.travelexpensetracker.R;
+import com.travelexpensetracker.model.Person;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +73,7 @@ public class AddPersonToTripActivity extends AppCompatActivity {
     //Variables to store user values
 
     String sPersonName,sPersonMobileNo,sPersonEmailId,sPersonDeposit;
-
+    List<Person> personList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,25 +126,14 @@ public class AddPersonToTripActivity extends AppCompatActivity {
 
     private void showAddPersonInputDailog() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(AddPersonToTripActivity.this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(AddPersonToTripActivity.this);
         LayoutInflater inflater = this.getLayoutInflater();
         View v = inflater.inflate(R.layout.dailog_add_person, null);  // this line
         builder.setView(v);
         initializeDailogUiComponents(v);
 
         // Set up the buttons
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                getUserEnteredValuesForAddingPerson();
-                if(validateUserEnteredValues()){
-
-                }else {
-
-                }
-                createAddPersonCardView();
-            }
-        });
+        builder.setPositiveButton(R.string.okdailogbutton,null);
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -151,13 +141,47 @@ public class AddPersonToTripActivity extends AppCompatActivity {
             }
         });
 
-        AlertDialog dialog = builder.create();
+        final AlertDialog dialog = builder.create();
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                Button b = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                b.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        getUserEnteredValuesForAddingPerson();
+                        if(validateUserEnteredValues()){
+                            addPersonDataToPersonObject();
+                            createAddPersonCardView();
+                            dialog.dismiss();
+                        }
+                    }
+                });
+            }
+        });
         dialog.show();
+    }
+
+    private void addPersonDataToPersonObject() {
+        Person person = new Person(sPersonName,sPersonMobileNo,sPersonEmailId,sPersonDeposit);
+        personList.add(0,person);
     }
 
     private boolean validateUserEnteredValues() {
 
-        return true;
+        boolean isValid = true;
+        View focusView = null;
+        if(sPersonName.isEmpty()){
+            actvPersonName.setError(getString(R.string.personnamerequired));
+            isValid = false;
+            focusView = actvPersonName;
+        }
+        else if(sPersonMobileNo.isEmpty()){
+            actvPersonMobileNo.setError(getString(R.string.personmobilenorequied));
+            isValid = false;
+            focusView = actvPersonMobileNo;
+        }
+        return isValid;
     }
 
     private void getUserEnteredValuesForAddingPerson() {
@@ -177,7 +201,7 @@ public class AddPersonToTripActivity extends AppCompatActivity {
     private void createAddPersonCardView() {
         iCountCardCreation++;
         if (iCountCardCreation>1){
-            personNameList.add(sPersonName);
+            personNameList.add(personList.get(0).getsPersonName());
             adapterPersonDetails = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, personNameList);
             listViewPerson.setAdapter(adapterPersonDetails);
 
@@ -204,7 +228,7 @@ public class AddPersonToTripActivity extends AppCompatActivity {
             // Set CardView elevation
             card.setCardElevation(9);
 
-            personNameList.add(sPersonName);
+            personNameList.add(personList.get(0).getsPersonName());
             adapterPersonDetails = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, personNameList);
             listViewPerson.setAdapter(adapterPersonDetails);
 
@@ -234,6 +258,8 @@ public class AddPersonToTripActivity extends AppCompatActivity {
         tvTripDescriptionDisplay = (TextView) findViewById(R.id.tvTripDescriptionDisplay);
         tvTripDate = (TextView) findViewById(R.id.tvTripDate);
         etTripNameTitleDisplay = (TextView) findViewById(R.id.etTripNameTitleDisplay);
+        personList = new ArrayList<>();
+        personList.clear();
     }
 
 
