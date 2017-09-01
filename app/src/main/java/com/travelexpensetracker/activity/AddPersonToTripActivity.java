@@ -121,6 +121,8 @@ public class AddPersonToTripActivity extends AppCompatActivity {
         Intent intentViewTripSummaryActivity = new Intent(AddPersonToTripActivity.this, TripSummaryActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("tripId",sTripId);
+        bundle.putString("tripName",sTripName);
+        bundle.putString("tripDate",sTripDate);
         intentViewTripSummaryActivity.putExtras(bundle);
         startActivity(intentViewTripSummaryActivity);
     }

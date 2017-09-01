@@ -10,21 +10,28 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.travelexpensetracker.R;
+import com.travelexpensetracker.database.DatabaseValues;
+import com.travelexpensetracker.model.Trip;
 
 public class TripSummaryActivity extends AppCompatActivity {
 
     //get data from create new trip activity
-    Bundle bundleTripId;
-    String sTripId;
+    Bundle bundleTripDetails;
+    String sTripId,sTripName,sTripDate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_summary);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getTripId();
-        super.setTitle(sTripId);
+        getTripDetails();
+        //getTripDetailsFromDatabase();
+        super.setTitle(sTripName);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,10 +42,36 @@ public class TripSummaryActivity extends AppCompatActivity {
         });
     }
 
-    private void getTripId() {
-        bundleTripId = getIntent().getExtras();
-        sTripId = bundleTripId.getString("tripId");
+    private void getTripDetailsFromDatabase() {
+        DatabaseReference databaseReferenceTripDetails = DatabaseValues.getTripDetailsReference();
+        databaseReferenceTripDetails.orderByChild("sTripId").equalTo(sTripId);
+        databaseReferenceTripDetails.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChildren()){
+                    for (DataSnapshot tripSnapshot : dataSnapshot.getChildren()){
+                        Trip trip = tripSnapshot.getValue(Trip.class);
+                        if (trip.getsTripId().equalsIgnoreCase(sTripId)) {
+                            sTripName = trip.getsTripName();
+                            Toast.makeText(TripSummaryActivity.this, "From Database " + sTripName, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
 
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void getTripDetails() {
+        bundleTripDetails = getIntent().getExtras();
+        sTripId = bundleTripDetails.getString("tripId");
+        sTripName = bundleTripDetails.getString("tripName");
+        sTripDate = bundleTripDetails.getString("tripDate");
         Toast.makeText(TripSummaryActivity.this,"Trip ID : "+ sTripId,Toast.LENGTH_SHORT ).show();
 
     }
