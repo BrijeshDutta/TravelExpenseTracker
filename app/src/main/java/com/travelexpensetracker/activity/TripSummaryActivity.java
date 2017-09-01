@@ -8,18 +8,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.Toast;
 
 import com.travelexpensetracker.R;
 
 public class TripSummaryActivity extends AppCompatActivity {
 
+    //get data from create new trip activity
+    Bundle bundleTripId;
+    String sTripId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_summary);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        getTripId();
+        super.setTitle(sTripId);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -29,6 +34,15 @@ public class TripSummaryActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void getTripId() {
+        bundleTripId = getIntent().getExtras();
+        sTripId = bundleTripId.getString("tripId");
+
+        Toast.makeText(TripSummaryActivity.this,"Trip ID : "+ sTripId,Toast.LENGTH_SHORT ).show();
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();

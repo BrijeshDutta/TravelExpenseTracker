@@ -112,12 +112,18 @@ public class AddPersonToTripActivity extends AppCompatActivity {
                     Toast.makeText(AddPersonToTripActivity.this, R.string.addatleastoneperson,Toast.LENGTH_SHORT).show();
                 }else {
                     processTripDataToDatabase();
-                    startActivity(new Intent(AddPersonToTripActivity.this,TripSummaryActivity.class));
+                    sendValuesToTripSummaryActivity();
                 }
             }
         });
     }
-
+    private void sendValuesToTripSummaryActivity() {
+        Intent intentViewTripSummaryActivity = new Intent(AddPersonToTripActivity.this, TripSummaryActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("tripId",sTripId);
+        intentViewTripSummaryActivity.putExtras(bundle);
+        startActivity(intentViewTripSummaryActivity);
+    }
     private void processTripDataToDatabase() {
 
         DatabaseReference databaseReferenceTrip = DatabaseValues.getTripDetailsReference();
