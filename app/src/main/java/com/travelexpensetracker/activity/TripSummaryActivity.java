@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -23,6 +24,8 @@ public class TripSummaryActivity extends AppCompatActivity {
     //get data from create new trip activity
     Bundle bundleTripDetails;
     String sTripId,sTripName,sTripDate;
+
+    TextView tvDisplayTripName,tvDisplayTripDate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,8 +33,11 @@ public class TripSummaryActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getTripDetails();
+        initializeUiCompoenets();
         //getTripDetailsFromDatabase();
-        super.setTitle(sTripName);
+        tvDisplayTripName.setText(sTripName);
+        tvDisplayTripDate.setText(sTripDate);
+        super.setTitle(null);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,6 +46,11 @@ public class TripSummaryActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    private void initializeUiCompoenets() {
+        tvDisplayTripName = (TextView) findViewById(R.id.tvDisplayTripName);
+        tvDisplayTripDate = (TextView) findViewById(R.id.tvDisplayTripDate);
     }
 
     private void getTripDetailsFromDatabase() {

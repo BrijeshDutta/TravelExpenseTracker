@@ -33,7 +33,6 @@
             android:theme="@style/AppThemeNO" />
         <activity
             android:name=".activity.TripSummaryActivity"
-            android:label="@string/title_activity_trip_summary"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
