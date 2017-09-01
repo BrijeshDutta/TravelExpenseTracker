@@ -29,15 +29,14 @@ public class TripSummaryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        super.setTitle(null);
         setContentView(R.layout.activity_trip_summary);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         getTripDetails();
         initializeUiCompoenets();
-        //getTripDetailsFromDatabase();
-        tvDisplayTripName.setText(sTripName);
-        tvDisplayTripDate.setText(sTripDate);
-        super.setTitle(null);
+        getTripDetailsFromDatabase();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +63,8 @@ public class TripSummaryActivity extends AppCompatActivity {
                         Trip trip = tripSnapshot.getValue(Trip.class);
                         if (trip.getsTripId().equalsIgnoreCase(sTripId)) {
                             sTripName = trip.getsTripName();
+                            sTripDate = trip.getsTripDate();
+                            setTripDetails();
                             Toast.makeText(TripSummaryActivity.this, "From Database " + sTripName, Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -78,13 +79,14 @@ public class TripSummaryActivity extends AppCompatActivity {
         });
     }
 
+    private void setTripDetails() {
+        tvDisplayTripName.setText(sTripName);
+        tvDisplayTripDate.setText(sTripDate);
+    }
+
     private void getTripDetails() {
         bundleTripDetails = getIntent().getExtras();
         sTripId = bundleTripDetails.getString("tripId");
-        sTripName = bundleTripDetails.getString("tripName");
-        sTripDate = bundleTripDetails.getString("tripDate");
-        Toast.makeText(TripSummaryActivity.this,"Trip ID : "+ sTripId,Toast.LENGTH_SHORT ).show();
-
     }
 
     @Override
