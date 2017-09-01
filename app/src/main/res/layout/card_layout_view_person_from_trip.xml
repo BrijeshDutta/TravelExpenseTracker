@@ -35,6 +35,7 @@
             android:layout_alignParentLeft="true"
             android:text="Person name"/>
         <ImageButton
+            android:id="@+id/ibAddExpenseToTrip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

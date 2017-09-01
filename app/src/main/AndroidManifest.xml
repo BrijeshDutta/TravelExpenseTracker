@@ -34,6 +34,9 @@
         <activity
             android:name=".activity.TripSummaryActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.AddExpenseActivity"
+            android:label="Add Expense"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

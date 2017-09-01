@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.travelexpensetracker.R;
+import com.travelexpensetracker.activity.AddExpenseActivity;
 import com.travelexpensetracker.model.Person;
 
 import java.io.OutputStream;
@@ -59,11 +60,18 @@ public class PersonListAdapter extends ArrayAdapter<Person> {
 
         TextView tvPersonName = (TextView) listViewItems.findViewById(R.id.tvPersonName);
         TextView tvPersonMobileNo = (TextView) listViewItems.findViewById(R.id.tvPersonMobileNo);
+        ImageButton ibAddExpenseToTrip = (ImageButton) listViewItems.findViewById(R.id.ibAddExpenseToTrip);
 
         personDetails = personDetailsList.get(position);
 
         tvPersonName.setText(personDetails.getsPersonName());
         tvPersonMobileNo.setText("("+personDetails.getsPersonMobileNo()+")");
+        ibAddExpenseToTrip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                context.startActivity(new Intent(context.getApplicationContext(), AddExpenseActivity.class));
+            }
+        });
         return listViewItems;
     }
 }
